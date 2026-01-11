@@ -6,13 +6,20 @@ import { sendEmail } from "@/lib/email";
 const API_SECRET = process.env.NEWSLETTER_API_SECRET || "ABCD1234EFGH5678IJKL91011MNOPQR12";
 
 export async function GET(request: Request) {
-  // Verify authorization
+  const url = new URL(request.url);
+  
+  // Allow authorization via header OR query parameter (for easy browser testing)
   const authHeader = request.headers.get("authorization");
-  const token = authHeader?.replace("Bearer ", "");
+  const headerToken = authHeader?.replace("Bearer ", "");
+  const queryToken = url.searchParams.get("key");
+  const token = headerToken || queryToken;
 
   if (!token || token !== API_SECRET) {
     return NextResponse.json(
-      { error: "Unauthorized" },
+      { 
+        error: "Unauthorized",
+        hint: `Add ?key=YOUR_API_SECRET to the URL. Your API secret is set in .env.local as NEWSLETTER_API_SECRET`
+      },
       { status: 401 }
     );
   }

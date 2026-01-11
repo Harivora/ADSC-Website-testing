@@ -1,4 +1,4 @@
-import { Trophy, BookText, Image } from "lucide-react";
+import { Trophy, BookText, Image as ImageIcon } from "lucide-react";
 
 export const COLOR = {
   pink: "#C44772",
@@ -76,7 +76,7 @@ export const baselineRewardsData = [
     subtitle: "Curated documentation with learning resources & project guides."
   },
   {
-    icon: <Image className="w-4 h-4" />,
+    icon: <ImageIcon className="w-4 h-4" />,
     title: "Themed Digital Wallpapers",
     subtitle: "Custom ADSC x Code Carnival digital wallpaper designs."
   },
