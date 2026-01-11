@@ -163,7 +163,7 @@ export function getEventEmailHtml(eventDetails: {
         <table width="600" cellpadding="0" cellspacing="0" style="background-color: #171717; border-radius: 12px; overflow: hidden;">
           <!-- Header -->
           <tr>
-            <td style="background-color: #1b2be3; padding: 40px; text-align: center;">
+            <td style="background-color: #444caa; padding: 40px; text-align: center;">
               <!-- ADSC Logo -->
               ${getADSCLogoHtml()}
               <p style="margin: 20px 0 10px; color: #fff; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">📅 New Event</p>
