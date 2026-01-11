@@ -134,7 +134,7 @@ export const events: Event[] = [
   },
   {
     id: "8",
-    image: "/images/events/ai-automation-tools-workshop.jpeg",
+    image: "/images/events/web3-simplified.jpg",
     name: "AI Automation Tools - Workshop",
     category: "AI & Automation for Productivity",
     tags: [
@@ -156,7 +156,7 @@ export const events: Event[] = [
   },
   {
     id: "9",
-    image: "/images/events/ai-automation-tools-workshop.jpeg",
+    image: "/images/events/web3-simplified.jpg",
     name: "AI Automation Tools - Workshop",
     category: "AI & Automation for Productivity",
     tags: [
