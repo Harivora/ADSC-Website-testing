@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  allowedDevOrigins: ['172.20.10.7'],
+  // or allow all local network IPs:
+  // allowedDevOrigins: ['192.168.*.*', '172.*.*.*', '10.*.*.*'],
 };
 
 export default nextConfig;
