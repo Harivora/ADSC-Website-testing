@@ -52,9 +52,8 @@ export async function POST(request: NextRequest) {
       .select('email');
 
     if (fetchError) {
-
       return NextResponse.json(
-        { error: `Failed to fetch subscribers: ${fetchError.message}` },
+        { error: 'Failed to fetch subscribers. Please try again.' },
         { status: 500 }
       );
     }
