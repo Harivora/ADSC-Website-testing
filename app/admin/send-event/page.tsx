@@ -27,6 +27,14 @@ interface SendResult {
   error?: string;
 }
 
+interface ConfirmModalProps {
+  isOpen: boolean;
+  eventName: string;
+  subscriberCount: number;
+  onConfirm: () => void;
+  onCancel: () => void;
+}
+
 const SEND_LIMITS = [
   { value: 10, label: "10" },
   { value: 25, label: "25" },
@@ -35,6 +43,78 @@ const SEND_LIMITS = [
   { value: 200, label: "200" },
   { value: -1, label: "All" },
 ];
+
+// Styled Confirmation Modal Component
+function ConfirmModal({ isOpen, eventName, subscriberCount, onConfirm, onCancel }: ConfirmModalProps) {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      {/* Backdrop */}
+      <div 
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        onClick={onCancel}
+      />
+      
+      {/* Modal */}
+      <div className="relative bg-zinc-900 border border-zinc-700 rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">
+        {/* Header with gradient */}
+        <div className="bg-gradient-to-r from-valencia/20 via-supernova/20 to-oceangreen/20 px-6 py-4 border-b border-zinc-800">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-xl bg-supernova/20 flex items-center justify-center">
+              <svg className="w-6 h-6 text-supernova" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-white">Confirm Send</h3>
+              <p className="text-zinc-400 text-sm">Review before sending</p>
+            </div>
+          </div>
+        </div>
+        
+        {/* Content */}
+        <div className="px-6 py-5">
+          <p className="text-zinc-300 text-base">
+            You are about to send <span className="text-supernova font-semibold">&quot;{eventName}&quot;</span> notification to:
+          </p>
+          
+          <div className="mt-4 bg-zinc-800/50 rounded-xl p-4 border border-zinc-700">
+            <div className="flex items-center justify-between">
+              <span className="text-zinc-400">Recipients</span>
+              <span className="text-2xl font-bold text-oceangreen">{subscriberCount}</span>
+            </div>
+            <p className="text-zinc-500 text-sm mt-1">subscriber{subscriberCount !== 1 ? "s" : ""} will receive this email</p>
+          </div>
+          
+          <p className="mt-4 text-zinc-500 text-sm">
+            This action cannot be undone. Make sure you have selected the correct event and recipient count.
+          </p>
+        </div>
+        
+        {/* Actions */}
+        <div className="px-6 py-4 border-t border-zinc-800 flex gap-3">
+          <Button
+            onClick={onCancel}
+            variant="outline"
+            className="flex-1 border-zinc-700 text-zinc-300 hover:bg-zinc-800"
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={onConfirm}
+            className="flex-1 bg-gradient-to-r from-valencia via-supernova to-oceangreen text-black font-semibold hover:opacity-90"
+          >
+            <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            </svg>
+            Send Now
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function SendEventPage() {
   const [events, setEvents] = useState<EventItem[]>([]);
@@ -45,6 +125,10 @@ export default function SendEventPage() {
   const [apiKey, setApiKey] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [sendLimit, setSendLimit] = useState<number>(-1);
+  
+  // Modal state
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [pendingEvent, setPendingEvent] = useState<{ id: string; name: string } | null>(null);
 
   // Authenticate and fetch events
   const handleAuth = async () => {
@@ -98,19 +182,23 @@ export default function SendEventPage() {
     return subscribers.slice(0, sendLimit);
   };
 
-  const sendEventEmail = async (eventId: string, eventName: string) => {
+  const handleSendClick = (eventId: string, eventName: string) => {
     const targetSubscribers = getSubscribersToSend();
     if (targetSubscribers.length === 0) {
       setResult({ message: "", error: "No subscribers to send emails to." });
       return;
     }
+    
+    // Show confirmation modal
+    setPendingEvent({ id: eventId, name: eventName });
+    setShowConfirmModal(true);
+  };
 
-    const confirmed = window.confirm(
-      `Send "${eventName}" notification to ${targetSubscribers.length} subscriber(s)?`
-    );
-    if (!confirmed) return;
-
-    setSendingId(eventId);
+  const handleConfirmSend = async () => {
+    if (!pendingEvent) return;
+    
+    setShowConfirmModal(false);
+    setSendingId(pendingEvent.id);
     setLoading(true);
     setResult(null);
 
@@ -122,7 +210,7 @@ export default function SendEventPage() {
           Authorization: `Bearer ${apiKey}`,
         },
         body: JSON.stringify({ 
-          eventId,
+          eventId: pendingEvent.id,
           limit: sendLimit === -1 ? undefined : sendLimit
         }),
       });
@@ -134,7 +222,13 @@ export default function SendEventPage() {
     } finally {
       setLoading(false);
       setSendingId(null);
+      setPendingEvent(null);
     }
+  };
+
+  const handleCancelSend = () => {
+    setShowConfirmModal(false);
+    setPendingEvent(null);
   };
 
   const handleLogout = () => {
@@ -237,6 +331,15 @@ export default function SendEventPage() {
   // Dashboard Screen
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950">
+      {/* Confirmation Modal */}
+      <ConfirmModal
+        isOpen={showConfirmModal}
+        eventName={pendingEvent?.name || ""}
+        subscriberCount={getSubscribersToSend().length}
+        onConfirm={handleConfirmSend}
+        onCancel={handleCancelSend}
+      />
+
       {/* Header with ADSC gradient */}
       <div className="border-b border-zinc-800 bg-zinc-900/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
@@ -500,7 +603,7 @@ export default function SendEventPage() {
                       </div>
                     </div>
                     <Button
-                      onClick={() => sendEventEmail(event.id, event.name)}
+                      onClick={() => handleSendClick(event.id, event.name)}
                       disabled={loading || subscribers.length === 0}
                       className={`flex-shrink-0 font-semibold ${
                         sendingId === event.id || subscribers.length === 0
