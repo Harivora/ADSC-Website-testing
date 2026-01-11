@@ -72,8 +72,8 @@ export default function SendEventPage() {
         setResult({ message: "", error: "Invalid API key. Access denied." });
         setIsAuthenticated(false);
       }
-    } catch (error) {
-      setResult({ message: "", error: `Connection error: ${error}` });
+    } catch {
+      setResult({ message: "", error: "Connection error. Please try again." });
     } finally {
       setLoading(false);
     }
@@ -129,8 +129,8 @@ export default function SendEventPage() {
 
       const data = await response.json();
       setResult(data);
-    } catch (error) {
-      setResult({ message: "", error: `Failed to send: ${error}` });
+    } catch {
+      setResult({ message: "", error: "Failed to send. Please try again." });
     } finally {
       setLoading(false);
       setSendingId(null);

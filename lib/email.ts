@@ -85,9 +85,9 @@ export function getWelcomeEmailHtml(email: string): string {
     <tr>
       <td align="center">
         <table width="600" cellpadding="0" cellspacing="0" style="background-color: #171717; border-radius: 12px; overflow: hidden;">
-          <!-- Header with gradient using all 4 colors -->
+          <!-- Header -->
           <tr>
-            <td style="background: linear-gradient(135deg, ${ADSC_COLORS.valencia} 0%, ${ADSC_COLORS.supernova} 50%, ${ADSC_COLORS.oceangreen} 100%); padding: 40px; text-align: center;">
+            <td style="background-color: #1a1a1a; padding: 40px; text-align: center;">
               <!-- ADSC Logo -->
               ${getADSCLogoHtml()}
               <h1 style="margin: 20px 0 0; color: #fff; font-size: 28px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">🎉 Welcome to ADSC!</h1>
@@ -183,9 +183,9 @@ export function getEventEmailHtml(eventDetails: {
     <tr>
       <td align="center">
         <table width="600" cellpadding="0" cellspacing="0" style="background-color: #171717; border-radius: 12px; overflow: hidden;">
-          <!-- Header with gradient using all 4 colors -->
+          <!-- Header -->
           <tr>
-            <td style="background: linear-gradient(135deg, ${ADSC_COLORS.azureradiance} 0%, ${ADSC_COLORS.oceangreen} 50%, ${ADSC_COLORS.supernova} 100%); padding: 40px; text-align: center;">
+            <td style="background-color: #1b2be3; padding: 40px; text-align: center;">
               <!-- ADSC Logo -->
               ${getADSCLogoHtml()}
               <p style="margin: 20px 0 10px; color: #fff; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">📅 New Event</p>
@@ -221,6 +221,12 @@ export function getEventEmailHtml(eventDetails: {
               
               <p style="color: #737373; font-size: 14px; margin: 20px 0 0; text-align: center;">
                 Don't miss out! See you there! 🚀
+              </p>
+              <p style="margin: 15px 0 0; text-align: center;">
+                <span style="color: ${ADSC_COLORS.valencia}; font-weight: bold;">—</span>
+                <span style="color: ${ADSC_COLORS.oceangreen}; font-weight: bold;"> The</span>
+                <span style="color: ${ADSC_COLORS.azureradiance}; font-weight: bold;"> ADSC</span>
+                <span style="color: ${ADSC_COLORS.supernova}; font-weight: bold;"> Team</span>
               </p>
             </td>
           </tr>
