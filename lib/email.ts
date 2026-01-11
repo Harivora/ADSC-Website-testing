@@ -38,35 +38,13 @@ export async function sendEmail({ to, subject, html }: EmailOptions) {
   }
 }
 
-// ADSC Logo HTML component for emails - 2x2 grid layout matching the actual logo
+// ADSC Logo URL - hosted on the live website
+const ADSC_LOGO_URL = 'https://adsc-atmiya.in/images/brand/logo.png';
+
+// ADSC Logo HTML component for emails - using hosted image
 function getADSCLogoHtml(): string {
   return `
-    <table cellpadding="0" cellspacing="0" style="margin: 0 auto; background-color: #000; border-radius: 12px; padding: 8px;">
-      <tr>
-        <td style="padding: 3px;">
-          <div style="width: 36px; height: 36px; background-color: #000; text-align: center; line-height: 36px;">
-            <span style="color: ${ADSC_COLORS.valencia}; font-weight: bold; font-size: 24px; font-family: 'Arial Black', Arial, sans-serif;">A</span>
-          </div>
-        </td>
-        <td style="padding: 3px;">
-          <div style="width: 36px; height: 36px; background-color: #000; text-align: center; line-height: 36px;">
-            <span style="color: ${ADSC_COLORS.oceangreen}; font-weight: bold; font-size: 24px; font-family: 'Arial Black', Arial, sans-serif;">D</span>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td style="padding: 3px;">
-          <div style="width: 36px; height: 36px; background-color: #000; text-align: center; line-height: 36px;">
-            <span style="color: ${ADSC_COLORS.azureradiance}; font-weight: bold; font-size: 24px; font-family: 'Arial Black', Arial, sans-serif;">S</span>
-          </div>
-        </td>
-        <td style="padding: 3px;">
-          <div style="width: 36px; height: 36px; background-color: #000; text-align: center; line-height: 36px;">
-            <span style="color: ${ADSC_COLORS.supernova}; font-weight: bold; font-size: 24px; font-family: 'Arial Black', Arial, sans-serif;">C</span>
-          </div>
-        </td>
-      </tr>
-    </table>
+    <img src="${ADSC_LOGO_URL}" alt="ADSC Logo" width="120" height="auto" style="display: block; margin: 0 auto;" />
   `;
 }
 
