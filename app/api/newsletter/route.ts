@@ -29,22 +29,29 @@ export async function POST(request: NextRequest) {
     }
 
     // Insert new subscriber
-    const { error } = await supabase
+    const { data: insertData, error } = await supabase
       .from('newsletter_subscribers')
       .insert([
         {
           email: email.toLowerCase(),
           subscribed_at: new Date().toISOString(),
         },
-      ]);
+      ])
+      .select();
 
     if (error) {
-      console.error('Supabase error:', error);
+      console.error('Supabase insert error:', error);
+      console.error('Error code:', error.code);
+      console.error('Error message:', error.message);
+      console.error('Error details:', error.details);
+      console.error('Error hint:', error.hint);
       return NextResponse.json(
-        { error: 'Failed to subscribe. Please try again.' },
+        { error: `Failed to subscribe: ${error.message}` },
         { status: 500 }
       );
     }
+
+    console.log('Successfully inserted:', insertData);
 
     // Send welcome email
     const emailResult = await sendEmail({

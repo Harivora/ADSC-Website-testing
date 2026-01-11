@@ -17,24 +17,30 @@ export async function GET(request: Request) {
       );
     }
 
-    // Get subscriber count from Supabase
-    const { count, error } = await supabase
+    // Get all subscribers from Supabase
+    const { data, error } = await supabase
       .from("newsletter_subscribers")
-      .select("*", { count: "exact", head: true });
+      .select("email, subscribed_at");
 
     if (error) {
       console.error("Supabase error:", error);
+      console.error("Error details:", error.message, error.details, error.hint);
       return NextResponse.json(
-        { error: "Failed to fetch subscriber count" },
+        { error: `Failed to fetch subscribers: ${error.message}`, count: 0 },
         { status: 500 }
       );
     }
 
-    return NextResponse.json({ count: count || 0 });
+    console.log("Fetched subscribers:", data?.length || 0);
+    
+    return NextResponse.json({ 
+      count: data?.length || 0,
+      subscribers: data || []
+    });
   } catch (error) {
     console.error("Error fetching subscribers:", error);
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: "Internal server error", count: 0 },
       { status: 500 }
     );
   }

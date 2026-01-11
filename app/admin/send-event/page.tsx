@@ -3,12 +3,18 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Link from "next/link";
 
 interface EventItem {
   id: string;
   name: string;
   date: string;
   category: string;
+}
+
+interface Subscriber {
+  email: string;
+  subscribed_at: string;
 }
 
 interface SendResult {
@@ -23,12 +29,12 @@ interface SendResult {
 
 export default function SendEventPage() {
   const [events, setEvents] = useState<EventItem[]>([]);
+  const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
   const [loading, setLoading] = useState(false);
   const [sendingId, setSendingId] = useState<string | null>(null);
   const [result, setResult] = useState<SendResult | null>(null);
   const [apiKey, setApiKey] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [subscriberCount, setSubscriberCount] = useState<number | null>(null);
 
   // Authenticate and fetch events
   const handleAuth = async () => {
@@ -52,8 +58,8 @@ export default function SendEventPage() {
         setIsAuthenticated(true);
         setResult(null);
         
-        // Get subscriber count
-        fetchSubscriberCount();
+        // Get subscribers
+        fetchSubscribers();
       } else {
         setResult({ message: "", error: "Invalid API key. Access denied." });
         setIsAuthenticated(false);
@@ -65,23 +71,28 @@ export default function SendEventPage() {
     }
   };
 
-  const fetchSubscriberCount = async () => {
+  const fetchSubscribers = async () => {
     try {
       const response = await fetch("/api/newsletter/subscribers", {
         headers: { Authorization: `Bearer ${apiKey}` },
       });
       if (response.ok) {
         const data = await response.json();
-        setSubscriberCount(data.count);
+        setSubscribers(data.subscribers || []);
       }
     } catch {
-      // Ignore errors for subscriber count
+      // Ignore errors
     }
   };
 
   const sendEventEmail = async (eventId: string, eventName: string) => {
+    if (subscribers.length === 0) {
+      setResult({ message: "", error: "No subscribers to send emails to." });
+      return;
+    }
+
     const confirmed = window.confirm(
-      `Are you sure you want to send "${eventName}" notification to all subscribers?`
+      `Send "${eventName}" notification to ${subscribers.length} subscriber(s)?`
     );
     if (!confirmed) return;
 
@@ -113,14 +124,14 @@ export default function SendEventPage() {
     setIsAuthenticated(false);
     setApiKey("");
     setEvents([]);
+    setSubscribers([]);
     setResult(null);
-    setSubscriberCount(null);
   };
 
   // Login Screen
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 flex items-center justify-center p-4 pt-24">
         <div className="w-full max-w-md">
           {/* Logo/Header */}
           <div className="text-center mb-8">
@@ -153,7 +164,7 @@ export default function SendEventPage() {
               {result?.error && (
                 <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
                   <p className="text-red-400 text-sm flex items-center gap-2">
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     {result.error}
@@ -167,7 +178,7 @@ export default function SendEventPage() {
                 className="w-full bg-yellow-600 hover:bg-yellow-700 text-black font-semibold py-2.5"
               >
                 {loading ? (
-                  <span className="flex items-center gap-2">
+                  <span className="flex items-center justify-center gap-2">
                     <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
@@ -186,6 +197,12 @@ export default function SendEventPage() {
               </p>
             </div>
           </div>
+
+          <div className="mt-6 text-center">
+            <Link href="/" className="text-zinc-500 hover:text-yellow-500 text-sm transition-colors">
+              ← Back to Home
+            </Link>
+          </div>
         </div>
       </div>
     );
@@ -193,10 +210,10 @@ export default function SendEventPage() {
 
   // Dashboard Screen
   return (
-    <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950">
+    <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 pt-20">
       {/* Header */}
-      <header className="border-b border-zinc-800 bg-zinc-900/50 backdrop-blur-xl sticky top-0 z-10">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="border-b border-zinc-800 bg-zinc-900/80 backdrop-blur-xl">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-yellow-600/20 border border-yellow-600/30 flex items-center justify-center">
               <svg className="w-5 h-5 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -217,11 +234,11 @@ export default function SendEventPage() {
             Logout
           </Button>
         </div>
-      </header>
+      </div>
 
-      <main className="max-w-6xl mx-auto px-6 py-8">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
           <div className="bg-zinc-900/50 backdrop-blur rounded-xl border border-zinc-800 p-5">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
@@ -244,7 +261,7 @@ export default function SendEventPage() {
                 </svg>
               </div>
               <div>
-                <p className="text-2xl font-bold text-white">{subscriberCount ?? "..."}</p>
+                <p className="text-2xl font-bold text-white">{subscribers.length}</p>
                 <p className="text-xs text-zinc-500">Subscribers</p>
               </div>
             </div>
@@ -276,15 +293,15 @@ export default function SendEventPage() {
           }`}>
             <div className="flex items-start gap-3">
               {result.error ? (
-                <svg className="w-5 h-5 text-red-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               ) : (
-                <svg className="w-5 h-5 text-green-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               )}
-              <div>
+              <div className="min-w-0 flex-1">
                 <p className={`font-medium ${result.error ? "text-red-400" : "text-green-400"}`}>
                   {result.error || result.message}
                 </p>
@@ -296,10 +313,12 @@ export default function SendEventPage() {
                 )}
                 {result.errors && result.errors.length > 0 && (
                   <details className="mt-2">
-                    <summary className="text-zinc-500 text-xs cursor-pointer">View errors</summary>
+                    <summary className="text-zinc-500 text-xs cursor-pointer hover:text-zinc-400">
+                      View {result.errors.length} error(s)
+                    </summary>
                     <ul className="mt-2 text-xs text-zinc-500 space-y-1">
                       {result.errors.map((err, i) => (
-                        <li key={i}>{err}</li>
+                        <li key={i} className="break-all">{err}</li>
                       ))}
                     </ul>
                   </details>
@@ -309,10 +328,45 @@ export default function SendEventPage() {
           </div>
         )}
 
+        {/* Subscribers List (if any) */}
+        {subscribers.length > 0 && (
+          <div className="mb-6 bg-zinc-900/50 backdrop-blur rounded-xl border border-zinc-800 overflow-hidden">
+            <div className="px-4 sm:px-6 py-4 border-b border-zinc-800">
+              <h2 className="text-base font-semibold text-white">Subscribers ({subscribers.length})</h2>
+            </div>
+            <div className="px-4 sm:px-6 py-3 max-h-32 overflow-y-auto">
+              <div className="flex flex-wrap gap-2">
+                {subscribers.map((sub, i) => (
+                  <span key={i} className="px-2 py-1 bg-zinc-800 rounded text-xs text-zinc-300">
+                    {sub.email}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* No Subscribers Warning */}
+        {subscribers.length === 0 && (
+          <div className="mb-6 p-4 rounded-xl border bg-yellow-500/10 border-yellow-500/30">
+            <div className="flex items-center gap-3">
+              <svg className="w-5 h-5 text-yellow-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+              <div>
+                <p className="font-medium text-yellow-400">No subscribers found</p>
+                <p className="text-zinc-400 text-sm mt-0.5">
+                  Check your Supabase connection or add subscribers through the newsletter form.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Events List */}
         <div className="bg-zinc-900/50 backdrop-blur rounded-xl border border-zinc-800 overflow-hidden">
-          <div className="px-6 py-4 border-b border-zinc-800">
-            <h2 className="text-lg font-semibold text-white">Send Event Notification</h2>
+          <div className="px-4 sm:px-6 py-4 border-b border-zinc-800">
+            <h2 className="text-base font-semibold text-white">Send Event Notification</h2>
             <p className="text-zinc-500 text-sm">Select an event to notify all subscribers</p>
           </div>
           
@@ -320,30 +374,32 @@ export default function SendEventPage() {
             {events.map((event) => (
               <div
                 key={event.id}
-                className="px-6 py-4 flex items-center justify-between hover:bg-zinc-800/30 transition-colors"
+                className="px-4 sm:px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-zinc-800/30 transition-colors"
               >
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-yellow-600/20 to-orange-600/20 border border-yellow-600/30 flex items-center justify-center">
-                    <span className="text-yellow-500 font-bold">{event.id}</span>
+                <div className="flex items-center gap-4 min-w-0">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-to-br from-yellow-600/20 to-orange-600/20 border border-yellow-600/30 flex items-center justify-center flex-shrink-0">
+                    <span className="text-yellow-500 font-bold text-sm">{event.id}</span>
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-white">{event.name}</h3>
-                    <p className="text-zinc-500 text-sm">
+                  <div className="min-w-0">
+                    <h3 className="font-semibold text-white truncate">{event.name}</h3>
+                    <p className="text-zinc-500 text-sm truncate">
                       {event.category} • {event.date}
                     </p>
                   </div>
                 </div>
                 <Button
                   onClick={() => sendEventEmail(event.id, event.name)}
-                  disabled={loading}
+                  disabled={loading || subscribers.length === 0}
                   className={`${
                     sendingId === event.id
                       ? "bg-zinc-700"
-                      : "bg-yellow-600 hover:bg-yellow-700"
-                  } text-black font-semibold min-w-[120px]`}
+                      : subscribers.length === 0
+                        ? "bg-zinc-700 cursor-not-allowed"
+                        : "bg-yellow-600 hover:bg-yellow-700"
+                  } text-black font-semibold min-w-[130px] flex-shrink-0`}
                 >
                   {sendingId === event.id ? (
-                    <span className="flex items-center gap-2">
+                    <span className="flex items-center justify-center gap-2">
                       <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
@@ -351,7 +407,7 @@ export default function SendEventPage() {
                       Sending...
                     </span>
                   ) : (
-                    <span className="flex items-center gap-2">
+                    <span className="flex items-center justify-center gap-2">
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                       </svg>
