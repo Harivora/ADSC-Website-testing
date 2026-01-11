@@ -20,17 +20,20 @@ const Newsletter = () => {
 
     setStatus("loading");
 
-    // Simulate API call - Replace this with your actual newsletter API
-    // Examples: Mailchimp, ConvertKit, SendGrid, or your own backend
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      
-      // TODO: Replace with actual API call
-      // const response = await fetch('/api/newsletter', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ email }),
-      // });
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setStatus("error");
+        setMessage(data.error || "Something went wrong. Please try again.");
+        return;
+      }
       
       setStatus("success");
       setMessage("🎉 You're subscribed! Check your inbox for updates.");
