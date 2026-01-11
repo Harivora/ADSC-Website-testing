@@ -10,7 +10,7 @@ const Footer = () => {
         {/* Logo + Social Media Column */}
         <div className="flex flex-col items-center md:items-start">
           <Logo isLogoFooter />
-          <ul className="flex gap-3 mt-5">
+          <ul className="mt-5 flex gap-3">
             {socialLinks.map((socialLink) => (
               <li key={socialLink.id}>
                 <Link href={socialLink.path} target="_blank" className="flex items-center gap-2">
@@ -22,7 +22,7 @@ const Footer = () => {
         </div>
         {/* Legal Column */}
         <div>
-          <h3 className="mb-4 text-lg font-semibold text-code">Legal</h3>
+          <h3 className="mb-4 font-semibold text-lg text-code">Legal</h3>
           <ul className="flex flex-col gap-3 text-gray-400">
             <li><Link href="/legal/cookies">Cookies</Link></li>
             <li><Link href="/legal/privacy">Privacy</Link></li>
@@ -31,7 +31,7 @@ const Footer = () => {
         </div>
         {/* Sitemap Column */}
         <div>
-          <h3 className="mb-4 text-lg font-semibold text-code">Sitemap</h3>
+          <h3 className="mb-4 font-semibold text-lg text-code">Sitemap</h3>
           <ul className="flex flex-col gap-3 text-gray-400">
             <li><Link href="/">Home</Link></li>
             <li><Link href="/events">Events</Link></li>
