@@ -108,7 +108,6 @@ export const TEAM_MEMBERS: TeamMember[] = [
     img: "/images/team-member/yashvi bhuva.jpeg",
     socialLinks: {
       linkedin: "https://www.linkedin.com/in/yashvi-bhuva",
-      github: "https://github.com/yashvi-bhuva",
     },
     expertise: ["Freelance", "Social-media Management","AI Applications"],
     bio: "I'm passionate about helping organizations make smarter decisions by strong foundation of Power-BI . Also worked as a content writer & Social- Media Management",
