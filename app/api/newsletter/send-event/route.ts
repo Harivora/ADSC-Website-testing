@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { eventId } = await request.json();
+    const { eventId, limit } = await request.json();
 
     // Validate event ID
     if (!eventId) {
@@ -46,10 +46,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get all subscribers
-    const { data: subscribers, error: fetchError } = await supabase
+    // Get all subscribers (with optional limit)
+    let query = supabase
       .from('newsletter_subscribers')
-      .select('email');
+      .select('email')
+      .order('subscribed_at', { ascending: true });
+    
+    // Apply limit if provided
+    if (limit && typeof limit === 'number' && limit > 0) {
+      query = query.limit(limit);
+    }
+
+    const { data: subscribers, error: fetchError } = await query;
 
     if (fetchError) {
       return NextResponse.json(
