@@ -150,7 +150,7 @@ export const events: Event[] = [
     date: "Jan 29, 2026",
     registerUrl: "https://events.adsc-atmiya.in/",
     color: "rgba(234,179,8)", // Yellow
-    btnBg: "rgba(202,138,4,0.5)",
+    btnBg: "rgba(184, 130, 12, 0.5)",
     btnBgHover: "rgba(133,77,14)",
     cardBg: "rgba(202,138,4,0.05)",
   }

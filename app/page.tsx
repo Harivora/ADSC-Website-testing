@@ -6,6 +6,7 @@ import EventCountdown from "@/components/Home/events/EventCountdown";
 import EventSection from "@/components/Home/events/EventSection";
 import Techs from "@/components/Home/techs/Techs";
 import CoreTeam from "@/components/Home/core-team/CoreTeam";
+import Newsletter from "@/components/Home/newsletter/Newsletter";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
       <EventSection />
       <Articles />
       <CoreTeam />
+      <Newsletter />
       <Contact />
     </>
   );
