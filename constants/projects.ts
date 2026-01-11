@@ -153,5 +153,27 @@ export const events: Event[] = [
     btnBg: "rgba(184, 130, 12, 0.5)",
     btnBgHover: "rgba(133,77,14)",
     cardBg: "rgba(202,138,4,0.05)",
+  },
+  {
+    id: "9",
+    image: "/images/events/ai-automation-tools-workshop.jpeg",
+    name: "AI Automation Tools - Workshop",
+    category: "AI & Automation for Productivity",
+    tags: [
+      "Workshop",
+      "AI Automation",
+      "Innovation",
+      "Prizes",
+      "AI Tools",
+      "Productivity"
+    ],
+    description:
+      "Explore the latest AI automation tools designed to boost productivity and streamline workflows. This workshop covers practical applications of AI in automating repetitive tasks, enhancing decision-making, and driving innovation. Participants will gain hands-on experience with cutting-edge tools and techniques to transform their work processes. Perfect for anyone looking to leverage AI for greater efficiency. Held on 15th February 2026 at 422 Seminar Hall, B Wing, Atmiya University.",
+    date: "Jan 29, 2026",
+    registerUrl: "https://events.adsc-atmiya.in/",
+    color: "rgba(234,179,8)", // Yellow
+    btnBg: "rgba(184, 130, 12, 0.5)",
+    btnBgHover: "rgba(133,77,14)",
+    cardBg: "rgba(202,138,4,0.05)",
   }
 ];
