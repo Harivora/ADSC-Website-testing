@@ -84,12 +84,12 @@ export function getWelcomeEmailHtml(email: string): string {
               <p style="color: #a3a3a3; font-size: 16px; line-height: 1.6; margin: 0 0 20px;">
                 You'll now receive updates about:
               </p>
-              <ul style="color: #a3a3a3; font-size: 16px; line-height: 1.8; margin: 0 0 30px; padding-left: 20px;">
-                <li><span style="color: ${ADSC_COLORS.valencia};">🚀</span> Upcoming workshops & events</li>
-                <li><span style="color: ${ADSC_COLORS.oceangreen};">💻</span> Hackathons & coding challenges</li>
-                <li><span style="color: ${ADSC_COLORS.azureradiance};">📚</span> Tech tutorials & resources</li>
-                <li><span style="color: ${ADSC_COLORS.supernova};">🎯</span> Career opportunities & internships</li>
-              </ul>
+              <div style="color: #a3a3a3; font-size: 16px; line-height: 2.2; margin: 0 0 30px; padding-left: 10px;">
+                <p style="margin: 0;">🚀 Upcoming workshops & events</p>
+                <p style="margin: 0;">💻 Hackathons & coding challenges</p>
+                <p style="margin: 0;">📚 Tech tutorials & resources</p>
+                <p style="margin: 0;">🎯 Career opportunities & internships</p>
+              </div>
               
               <!-- CTA Button with gradient -->
               <table width="100%" cellpadding="0" cellspacing="0">
