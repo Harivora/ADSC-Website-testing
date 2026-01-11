@@ -38,29 +38,31 @@ export async function sendEmail({ to, subject, html }: EmailOptions) {
   }
 }
 
-// ADSC Logo HTML component for emails
+// ADSC Logo HTML component for emails - 2x2 grid layout matching the actual logo
 function getADSCLogoHtml(): string {
   return `
-    <table cellpadding="0" cellspacing="0" style="margin: 0 auto;">
+    <table cellpadding="0" cellspacing="0" style="margin: 0 auto; background-color: #000; border-radius: 12px; padding: 8px;">
       <tr>
-        <td style="padding: 0 2px;">
-          <div style="width: 40px; height: 40px; background-color: rgba(220, 61, 67, 0.2); border: 2px solid ${ADSC_COLORS.valencia}; border-radius: 8px; text-align: center; line-height: 36px;">
-            <span style="color: ${ADSC_COLORS.valencia}; font-weight: bold; font-size: 20px; font-family: Arial, sans-serif;">A</span>
+        <td style="padding: 3px;">
+          <div style="width: 36px; height: 36px; background-color: #000; text-align: center; line-height: 36px;">
+            <span style="color: ${ADSC_COLORS.valencia}; font-weight: bold; font-size: 24px; font-family: 'Arial Black', Arial, sans-serif;">A</span>
           </div>
         </td>
-        <td style="padding: 0 2px;">
-          <div style="width: 40px; height: 40px; background-color: rgba(60, 177, 121, 0.2); border: 2px solid ${ADSC_COLORS.oceangreen}; border-radius: 8px; text-align: center; line-height: 36px;">
-            <span style="color: ${ADSC_COLORS.oceangreen}; font-weight: bold; font-size: 20px; font-family: Arial, sans-serif;">D</span>
+        <td style="padding: 3px;">
+          <div style="width: 36px; height: 36px; background-color: #000; text-align: center; line-height: 36px;">
+            <span style="color: ${ADSC_COLORS.oceangreen}; font-weight: bold; font-size: 24px; font-family: 'Arial Black', Arial, sans-serif;">D</span>
           </div>
         </td>
-        <td style="padding: 0 2px;">
-          <div style="width: 40px; height: 40px; background-color: rgba(0, 145, 255, 0.2); border: 2px solid ${ADSC_COLORS.azureradiance}; border-radius: 8px; text-align: center; line-height: 36px;">
-            <span style="color: ${ADSC_COLORS.azureradiance}; font-weight: bold; font-size: 20px; font-family: Arial, sans-serif;">S</span>
+      </tr>
+      <tr>
+        <td style="padding: 3px;">
+          <div style="width: 36px; height: 36px; background-color: #000; text-align: center; line-height: 36px;">
+            <span style="color: ${ADSC_COLORS.azureradiance}; font-weight: bold; font-size: 24px; font-family: 'Arial Black', Arial, sans-serif;">S</span>
           </div>
         </td>
-        <td style="padding: 0 2px;">
-          <div style="width: 40px; height: 40px; background-color: rgba(247, 206, 0, 0.2); border: 2px solid ${ADSC_COLORS.supernova}; border-radius: 8px; text-align: center; line-height: 36px;">
-            <span style="color: ${ADSC_COLORS.supernova}; font-weight: bold; font-size: 20px; font-family: Arial, sans-serif;">C</span>
+        <td style="padding: 3px;">
+          <div style="width: 36px; height: 36px; background-color: #000; text-align: center; line-height: 36px;">
+            <span style="color: ${ADSC_COLORS.supernova}; font-weight: bold; font-size: 24px; font-family: 'Arial Black', Arial, sans-serif;">C</span>
           </div>
         </td>
       </tr>
