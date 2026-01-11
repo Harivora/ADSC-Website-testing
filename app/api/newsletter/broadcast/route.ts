@@ -9,7 +9,6 @@ export async function POST(request: NextRequest) {
   try {
     // Verify API secret is configured
     if (!API_SECRET) {
-      console.error('NEWSLETTER_API_SECRET not configured');
       return NextResponse.json(
         { error: 'Server configuration error' },
         { status: 500 }
@@ -54,7 +53,6 @@ export async function POST(request: NextRequest) {
       .select('email');
 
     if (fetchError) {
-      console.error('Fetch subscribers error:', fetchError);
       return NextResponse.json(
         { error: 'Failed to fetch subscribers.' },
         { status: 500 }
@@ -95,7 +93,6 @@ export async function POST(request: NextRequest) {
         successCount += emails.length;
       } else {
         failCount += emails.length;
-        console.error('Batch email failed:', result.error);
       }
 
       // Small delay between batches
@@ -111,7 +108,6 @@ export async function POST(request: NextRequest) {
       failCount,
     });
   } catch {
-    console.error('Broadcast API error');
     return NextResponse.json(
       { error: 'Something went wrong. Please try again.' },
       { status: 500 }

@@ -31,7 +31,6 @@ export async function GET(request: Request) {
       .select("email, subscribed_at");
 
     if (error) {
-      console.error("Supabase error:", error.message);
       return NextResponse.json(
         { error: "Failed to fetch subscribers", count: 0 },
         { status: 500 }
@@ -42,8 +41,7 @@ export async function GET(request: Request) {
       count: data?.length || 0,
       subscribers: data || []
     });
-  } catch (error) {
-    console.error("Error fetching subscribers:", error);
+  } catch {
     return NextResponse.json(
       { error: "Internal server error", count: 0 },
       { status: 500 }

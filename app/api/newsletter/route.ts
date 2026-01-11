@@ -8,7 +8,7 @@ const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 // Rate limiting: Simple in-memory store (resets on server restart)
 // For production, consider Redis or database-based rate limiting
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
-const RATE_LIMIT = 50; // Max 50 requests
+const RATE_LIMIT = 5; // Max 5 requests
 const RATE_WINDOW = 60 * 1000; // Per minute
 
 function isRateLimited(ip: string): boolean {
@@ -107,7 +107,6 @@ export async function POST(request: NextRequest) {
       }]);
 
     if (error) {
-      console.error('Subscription error:', error.message);
       return NextResponse.json(
         { error: 'Failed to subscribe. Please try again.' },
         { status: 500 }
@@ -122,15 +121,14 @@ export async function POST(request: NextRequest) {
         html: getWelcomeEmailHtml(sanitizedEmail),
       });
     } catch {
-      console.error('Welcome email failed');
+      // Silent fail - don't expose email errors
     }
 
     return NextResponse.json(
       { message: 'Successfully subscribed to the newsletter!' },
       { status: 201 }
     );
-  } catch (error) {
-    console.error('Newsletter API error:', error);
+  } catch {
     return NextResponse.json(
       { error: 'Something went wrong. Please try again.' },
       { status: 500 }

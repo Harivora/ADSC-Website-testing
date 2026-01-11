@@ -10,7 +10,6 @@ export async function POST(request: NextRequest) {
   try {
     // Verify API secret
     if (!API_SECRET) {
-      console.error('NEWSLETTER_API_SECRET is not configured');
       return NextResponse.json(
         { error: 'Server configuration error' },
         { status: 500 }
@@ -53,7 +52,7 @@ export async function POST(request: NextRequest) {
       .select('email');
 
     if (fetchError) {
-      console.error('Fetch subscribers error:', fetchError);
+
       return NextResponse.json(
         { error: `Failed to fetch subscribers: ${fetchError.message}` },
         { status: 500 }
@@ -114,7 +113,6 @@ export async function POST(request: NextRequest) {
       errors: errors.length > 0 ? errors : undefined,
     });
   } catch {
-    console.error('Send event API error');
     return NextResponse.json(
       { error: 'Something went wrong. Please try again.' },
       { status: 500 }
