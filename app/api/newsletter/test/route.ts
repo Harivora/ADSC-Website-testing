@@ -65,7 +65,6 @@ export async function GET(request: Request) {
   }
 
   // Test 3: Test email sending (only if testEmail param is provided)
-  const url = new URL(request.url);
   const testEmail = url.searchParams.get("testEmail");
 
   if (testEmail) {
