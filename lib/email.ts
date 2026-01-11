@@ -39,7 +39,7 @@ export async function sendEmail({ to, subject, html }: EmailOptions) {
 }
 
 // ADSC Logo URL - hosted on the live website
-const ADSC_LOGO_URL = 'https://adsc-atmiya.in/images/brand/logo.png';
+const ADSC_LOGO_URL = 'https://adsc-website-testing.vercel.app/images/brand/logo.png';
 
 // ADSC Logo HTML component for emails - using hosted image
 function getADSCLogoHtml(): string {
