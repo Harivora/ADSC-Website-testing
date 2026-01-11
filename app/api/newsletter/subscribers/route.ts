@@ -2,10 +2,18 @@ import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 
 // Secure API key from environment
-const API_SECRET = process.env.NEWSLETTER_API_SECRET || "ABCD1234EFGH5678IJKL91011MNOPQR12";
+const API_SECRET = process.env.NEWSLETTER_API_SECRET;
 
 export async function GET(request: Request) {
   try {
+    // Verify API secret is configured
+    if (!API_SECRET) {
+      return NextResponse.json(
+        { error: "Server configuration error" },
+        { status: 500 }
+      );
+    }
+
     // Verify authorization
     const authHeader = request.headers.get("authorization");
     const token = authHeader?.replace("Bearer ", "");
@@ -23,15 +31,12 @@ export async function GET(request: Request) {
       .select("email, subscribed_at");
 
     if (error) {
-      console.error("Supabase error:", error);
-      console.error("Error details:", error.message, error.details, error.hint);
+      console.error("Supabase error:", error.message);
       return NextResponse.json(
-        { error: `Failed to fetch subscribers: ${error.message}`, count: 0 },
+        { error: "Failed to fetch subscribers", count: 0 },
         { status: 500 }
       );
     }
-
-    console.log("Fetched subscribers:", data?.length || 0);
     
     return NextResponse.json({ 
       count: data?.length || 0,

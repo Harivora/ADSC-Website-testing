@@ -7,16 +7,38 @@ const API_SECRET = process.env.NEWSLETTER_API_SECRET;
 
 export async function POST(request: NextRequest) {
   try {
-    // Verify API secret
+    // Verify API secret is configured
+    if (!API_SECRET) {
+      console.error('NEWSLETTER_API_SECRET not configured');
+      return NextResponse.json(
+        { error: 'Server configuration error' },
+        { status: 500 }
+      );
+    }
+
+    // Verify authorization
     const authHeader = request.headers.get('authorization');
-    if (!API_SECRET || authHeader !== `Bearer ${API_SECRET}`) {
+    const token = authHeader?.replace('Bearer ', '');
+    
+    if (!token || token !== API_SECRET) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
       );
     }
 
-    const { eventName, eventDescription, eventDate, registerUrl } = await request.json();
+    // Parse request body safely
+    let body;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json(
+        { error: 'Invalid request format' },
+        { status: 400 }
+      );
+    }
+
+    const { eventName, eventDescription, eventDate, registerUrl } = body;
 
     // Validate required fields
     if (!eventName || !eventDescription || !eventDate) {
@@ -88,8 +110,8 @@ export async function POST(request: NextRequest) {
       successCount,
       failCount,
     });
-  } catch (error) {
-    console.error('Broadcast API error:', error);
+  } catch {
+    console.error('Broadcast API error');
     return NextResponse.json(
       { error: 'Something went wrong. Please try again.' },
       { status: 500 }
