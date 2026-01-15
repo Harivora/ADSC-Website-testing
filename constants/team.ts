@@ -16,6 +16,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     bio: "Data science enthusiast with expertise in ML, automation, and web technologies. Passionate about combining leadership and technology to drive impactful solutions.",
     bgGradientColor: "#24349eff",
   },
+
   {
     id: "mashuk-sheikh",
     name: "Mashuk Sheikh",
@@ -31,10 +32,11 @@ export const TEAM_MEMBERS: TeamMember[] = [
     bio: "Experienced technical leader with 10+ years in software development",
     bgGradientColor: "#5302FF",
   },
+
   {
     id: "meet-babariya",
     name: "Meet Babariya",
-    role: "Dev Team Lead",
+    role: " Web Dev Lead",
     department: "B.Tech CE",
     img: "/images/team-member/meet-babariya.jpeg",
     socialLinks: {
@@ -45,6 +47,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     bio: "Web Developer focused on building responsive and efficient web applications, currently learning cybersecurity to enhance application security and data protection.",
     bgGradientColor: "#2C6A2F",
   },
+
   {
     id: "parth-gondaliya",
     name: "Parth Gondaliya",
@@ -59,6 +62,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     bio: "Robotics enthusiast focused on building practical, automation-driven solutions using embedded systems.",
     bgGradientColor: "#5302FF",
   },
+
   {
     id: "abhishek-chhatbar",
     name: "Abhishek Chhatbar",
@@ -73,6 +77,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     bio: "Innovative Front-End Developer specializing in building scalable and user-friendly web applications. Passionate about leveraging modern technologies like ReactJs to create impactful digital experiences.",
     bgGradientColor: "#2C6A2F",
   },
+
   {
     id: "vilan-nakum",
     name: "Vilan Nakum",
@@ -86,20 +91,22 @@ export const TEAM_MEMBERS: TeamMember[] = [
     bio: "I specialize in video editing, video shooting, content production, and social media page management to drive engagement and growth.",
     bgGradientColor: "#5302FF",
   },
+
   {
-    id: "harikrishna-patel",
-    name: "Harikrishna Patel",
+    id: "smit-pansuriya",
+    name: "Smit Pansuriya",
     role: "AI / ML Lead",
     department: "Artificial Intelligence",
-    img: "/images/team-member/harikrishna-vora.jpeg",
+    img: "/images/team-member/smit-pansuriya.jpeg",
     socialLinks: {
-      linkedin: "www.linkedin.com/in/kishanviradiya", 
+      linkedin: "https://www.linkedin.com/in/smit-pansuriya-a27b6b336/", 
       github: "https://github.com/Kishan1405",
     },
     expertise: ["AI Industrial Application", "Model Training", "Leadership"],
     bio: "I am an AI Prompt Engineer and ML Enthusiast, specializing in industry AI integration and innovation.",
     bgGradientColor: "#2C6A2F",
   },
+
   {   
     id: "yashvi-bhuva",
     name: "Yashvi Bhuva",
@@ -113,4 +120,35 @@ export const TEAM_MEMBERS: TeamMember[] = [
     bio: "I'm passionate about helping organizations make smarter decisions by strong foundation of Power-BI . Also worked as a content writer & Social- Media Management",
     bgGradientColor: "#5302FF",
   },
+
+  {   
+    id: "nimit-sorathiya",
+    name: "Nimit Sorathiya",
+    role: "Event Management Lead",
+    department: "B.Tech IT",
+    img: "/images/team-member/sachin-chauhan.jpeg",
+    socialLinks: {
+      linkedin: "https://www.linkedin.com/in/nimit-sorathiya",
+      github: ""
+    },
+    expertise: ["Event Management", "Social-media Management","Managing Teams"],
+    bio: "I'm passionate about helping organizations make smarter decisions by strong foundation of Power-BI . Also worked as a content writer & Social- Media Management",
+    bgGradientColor: "#2C6A2F",
+  },
+
+  {
+    id: "sachin-chauhan",
+    name: "Sachin Chauhan",
+    role: " App Dev Lead",
+    department: "B.Tech CE",
+    img: "/images/team-member/sachin-chauhan.jpeg",
+    socialLinks: {
+      linkedin: " https://www.linkedin.com/in/sachinchauhanpy/",
+      github: "https://github.com/SachinChauhanPy",
+    },
+    expertise: ["Full Stack Development", "Python", "Performance Optimization"],
+    bio: "Proficient in developing scalable and efficient applications, integrating APIs, and optimizing database performance. Adept at problem-solving and collaborating with cross-functional teams to deliver high-quality software solutions",
+    bgGradientColor: "#5302FF",
+  },
+
 ];
