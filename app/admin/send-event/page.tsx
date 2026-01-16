@@ -349,69 +349,54 @@ export default function SendEventPage() {
 
       {/* Header with ADSC gradient */}
       <div className="border-b border-zinc-800 bg-zinc-900/80 backdrop-blur-xl sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
-              {/* Mini ADSC Logo */}
-              <Link href="/" className="flex items-center gap-0.5 group">
-                <span className="w-8 h-8 rounded-lg bg-valencia/20 border border-valencia/40 flex items-center justify-center text-valencia font-bold text-sm transition-all group-hover:bg-valencia/30 group-hover:scale-105">A</span>
-                <span className="w-8 h-8 rounded-lg bg-oceangreen/20 border border-oceangreen/40 flex items-center justify-center text-oceangreen font-bold text-sm transition-all group-hover:bg-oceangreen/30 group-hover:scale-105">D</span>
-                <span className="w-8 h-8 rounded-lg bg-azureradiance/20 border border-azureradiance/40 flex items-center justify-center text-azureradiance font-bold text-sm transition-all group-hover:bg-azureradiance/30 group-hover:scale-105">S</span>
-                <span className="w-8 h-8 rounded-lg bg-supernova/20 border border-supernova/40 flex items-center justify-center text-supernova font-bold text-sm transition-all group-hover:bg-supernova/30 group-hover:scale-105">C</span>
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 py-6">
+          <div className="flex items-center justify-between gap-8">
+            {/* Left - Mini ADSC Logo & Title */}
+            <div className="flex items-center gap-5 flex-shrink-0">
+              <Link href="/" className="flex items-center gap-1 group">
+                <span className="w-10 h-10 rounded-lg bg-valencia/20 border border-valencia/40 flex items-center justify-center text-valencia font-bold text-base transition-all group-hover:bg-valencia/30 group-hover:scale-105">A</span>
+                <span className="w-10 h-10 rounded-lg bg-oceangreen/20 border border-oceangreen/40 flex items-center justify-center text-oceangreen font-bold text-base transition-all group-hover:bg-oceangreen/30 group-hover:scale-105">D</span>
+                <span className="w-10 h-10 rounded-lg bg-azureradiance/20 border border-azureradiance/40 flex items-center justify-center text-azureradiance font-bold text-base transition-all group-hover:bg-azureradiance/30 group-hover:scale-105">S</span>
+                <span className="w-10 h-10 rounded-lg bg-supernova/20 border border-supernova/40 flex items-center justify-center text-supernova font-bold text-base transition-all group-hover:bg-supernova/30 group-hover:scale-105">C</span>
               </Link>
-              <div>
-                <h1 className="text-lg font-bold text-white">Newsletter Admin</h1>
-                <p className="text-xs text-zinc-500">Event Notification Center</p>
+              <div className="hidden sm:block">
+                <h1 className="text-xl font-bold text-white">Newsletter Admin</h1>
+                <p className="text-sm text-zinc-500">Event Notification Center</p>
               </div>
             </div>
             
-            {/* Center Logo */}
-            <Link href="/" className="hidden lg:flex items-center gap-1 absolute left-1/2 transform -translate-x-1/2 group">
-              <span className="text-valencia font-bold text-2xl transition-transform group-hover:scale-110">A</span>
-              <span className="text-oceangreen font-bold text-2xl transition-transform group-hover:scale-110">D</span>
-              <span className="text-azureradiance font-bold text-2xl transition-transform group-hover:scale-110">S</span>
-              <span className="text-supernova font-bold text-2xl transition-transform group-hover:scale-110">C</span>
-            </Link>
-            
-            {/* Navigation Links */}
-            <div className="flex items-center gap-4">
-              <nav className="hidden md:flex items-center gap-1">
+            {/* Right - Navigation & Logout */}
+            <div className="flex items-center gap-4 sm:gap-8">
+              <nav className="hidden md:flex items-center gap-3">
                 <Link 
                   href="/events" 
-                  className="px-3 py-2 text-sm font-medium text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-lg transition-all"
+                  className="px-5 py-2.5 text-sm font-semibold text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-lg transition-all"
                 >
                   EVENTS
                 </Link>
                 <Link 
                   href="/hackathons" 
-                  className="px-3 py-2 text-sm font-medium text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-lg transition-all"
+                  className="px-5 py-2.5 text-sm font-semibold text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-lg transition-all"
                 >
                   HACKATHONS
-                </Link>
-                <Link 
-                  href="/" 
-                  className="px-3 py-2 text-sm font-medium text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-lg transition-all"
-                >
-                  EMS
                 </Link>
               </nav>
               <Button
                 onClick={handleLogout}
                 variant="outline"
-                size="sm"
-                className="border-zinc-700 text-zinc-300 hover:bg-valencia/20 hover:border-valencia hover:text-valencia transition-all"
+                className="border-zinc-700 text-zinc-300 hover:bg-valencia/20 hover:border-valencia hover:text-valencia transition-all px-5 py-2.5 h-auto"
               >
-                <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-5 h-5 sm:mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                 </svg>
-                Logout
+                <span className="hidden sm:inline font-semibold">Logout</span>
               </Button>
             </div>
           </div>
         </div>
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <main className="max-w-7xl mx-auto px-6 sm:px-8 py-12">
         {/* Stats Row with ADSC colors */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <div className="bg-zinc-900/50 backdrop-blur rounded-xl border border-valencia/30 p-5 hover:border-valencia hover:bg-valencia/5 hover:scale-[1.02] transition-all duration-300 cursor-default group">
