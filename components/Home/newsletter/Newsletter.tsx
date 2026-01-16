@@ -46,17 +46,17 @@ const Newsletter = () => {
 
   return (
     <section className="relative py-20 overflow-hidden">
-      {/* Background gradient with ADSC colors */}
-      <div className="absolute inset-0 bg-gradient-to-br from-red-600/5 via-green-600/5 to-blue-600/5" />
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-yellow-600/5 to-transparent" />
       
       <div className="relative z-10 px-6 xl:px-56">
         <div className="max-w-3xl mx-auto text-center">
           {/* Icon */}
           <div className="flex justify-center mb-6">
-            <div className="p-4 rounded-full bg-gradient-to-br from-red-600/10 via-blue-600/10 to-green-600/10 border border-blue-600/20">
+            <div className="p-4 rounded-full bg-yellow-600/10 border border-yellow-600/20">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-8 w-8 text-blue-400"
+                className="h-8 w-8 text-yellow-500"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -74,7 +74,7 @@ const Newsletter = () => {
           {/* Heading */}
           <h2 className="text-2xl md:text-4xl font-bold text-white mb-4">
             Stay in the Loop with{" "}
-            <span className="bg-gradient-to-r from-red-500 via-green-500 to-blue-500 bg-clip-text text-transparent">ADSC</span>
+            <span className="text-yellow-600">ADSC</span>
           </h2>
           
           {/* Description */}
@@ -94,13 +94,13 @@ const Newsletter = () => {
                 setEmail(e.target.value);
                 if (status !== "idle") setStatus("idle");
               }}
-              className="flex-1 bg-zinc-900 border-zinc-700 text-white placeholder:text-zinc-500 focus:border-blue-500 focus:ring-blue-500/20"
+              className="flex-1 bg-zinc-900 border-zinc-700 text-white placeholder:text-zinc-500 focus:border-yellow-600 focus:ring-yellow-600/20"
               disabled={status === "loading"}
             />
             <Button
               type="submit"
               disabled={status === "loading"}
-              className="bg-gradient-to-r from-red-500 via-green-500 to-blue-500 hover:from-red-600 hover:via-green-600 hover:to-blue-600 text-white font-semibold px-6 whitespace-nowrap"
+              className="bg-yellow-600 hover:bg-yellow-700 text-black font-semibold px-6 whitespace-nowrap"
             >
               {status === "loading" ? (
                 <span className="flex items-center gap-2">
