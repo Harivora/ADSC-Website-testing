@@ -128,15 +128,8 @@ const EventCountdown = () => {
           <TimeBlock value={timeLeft.seconds} label="Seconds" />
         </div>
 
-        {/* CTA Buttons */}
+        {/* CTA Button */}
         <div className="flex justify-center gap-4">
-          {nextEvent.registerUrl && (
-            <Button asChild size="lg" className="bg-yellow-600 hover:bg-yellow-700 text-black font-semibold">
-              <a href={nextEvent.registerUrl} target="_blank" rel="noopener noreferrer">
-                Register Now
-              </a>
-            </Button>
-          )}
           <Button asChild size="lg" variant="outline">
             <Link href="/events">View All Events</Link>
           </Button>

@@ -134,14 +134,14 @@ export const events: Event[] = [
   },
   {
     id: "8",
-    image: "/images/events/web3-simplified.jpg",
+    image: "/images/events/web-dev-seminar.jpeg",
     name: "AI Automation Tools - Workshop",
     category: "AI & Automation for Productivity",
     tags: [
       "Workshop",
       "AI Automation",
       "Innovation",
-      "Prizes",
+      "GDG Rajkot",
       "AI Tools",
       "Productivity"
     ],
