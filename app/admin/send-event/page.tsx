@@ -151,6 +151,10 @@ export default function SendEventPage() {
         setEvents(data.events || []);
         setIsAuthenticated(true);
         setResult(null);
+        
+        // Set secure cookie for middleware authentication
+        document.cookie = `admin_session=${apiKey}; path=/; max-age=3600; secure; samesite=strict`;
+        
         fetchSubscribers();
       } else {
         setResult({ message: "", error: "Invalid API key. Access denied." });
@@ -237,6 +241,9 @@ export default function SendEventPage() {
     setEvents([]);
     setSubscribers([]);
     setResult(null);
+    
+    // Clear the admin session cookie
+    document.cookie = "admin_session=; path=/; max-age=0; secure; samesite=strict";
   };
 
   // Login Screen
