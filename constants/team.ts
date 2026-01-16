@@ -6,7 +6,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     name: "Harikrishna Vora",
     role: "Team Lead",
     department: "Leadership and Development",
-    img: "/images/team-member/harikrishna-vora.jpeg",
+    img: "/images/team-member/harikrishna-vora.png",
     socialLinks: {
       linkedin: "https://www.linkedin.com/in/harikrishnavora/",
       github: "https://github.com/Harivora",
@@ -52,7 +52,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     id: "parth-gondaliya",
     name: "Parth Gondaliya",
     role: "Robotics Lead",
-    department: "B.Tech CE",
+    department: "B.Tech CSE",
     img: "/images/team-member/parth-gondaliya.jpeg",
     socialLinks: {
       linkedin: "https://www.linkedin.com/in/mrparth-gondaliya/",
@@ -125,11 +125,11 @@ export const TEAM_MEMBERS: TeamMember[] = [
     id: "nimit-sorathiya",
     name: "Nimit Sorathiya",
     role: "Event Management Lead",
-    department: "B.Tech IT",
-    img: "/images/team-member/sachin-chauhan.jpeg",
+    department: "B.Tech CE",
+    img: "/images/team-member/nimit-sorathiya.jpeg",
     socialLinks: {
       linkedin: "https://www.linkedin.com/in/nimit-sorathiya",
-      github: ""
+      github: "https://github.com/Nimit-Patel-003"
     },
     expertise: ["Event Management", "Social-media Management","Managing Teams"],
     bio: "I'm passionate about helping organizations make smarter decisions by strong foundation of Power-BI . Also worked as a content writer & Social- Media Management",
