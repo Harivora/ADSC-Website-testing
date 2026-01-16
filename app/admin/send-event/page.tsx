@@ -254,16 +254,16 @@ export default function SendEventPage() {
           {/* ADSC Colored Logo Header */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center gap-1 mb-4">
-              <div className="w-12 h-12 rounded-xl bg-valencia/20 border border-valencia/40 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-valencia/20 border border-valencia/40 flex items-center justify-center hover:bg-valencia/30 hover:scale-110 transition-all duration-300 cursor-default">
                 <span className="text-valencia font-bold text-xl">A</span>
               </div>
-              <div className="w-12 h-12 rounded-xl bg-oceangreen/20 border border-oceangreen/40 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-oceangreen/20 border border-oceangreen/40 flex items-center justify-center hover:bg-oceangreen/30 hover:scale-110 transition-all duration-300 cursor-default">
                 <span className="text-oceangreen font-bold text-xl">D</span>
               </div>
-              <div className="w-12 h-12 rounded-xl bg-azureradiance/20 border border-azureradiance/40 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-azureradiance/20 border border-azureradiance/40 flex items-center justify-center hover:bg-azureradiance/30 hover:scale-110 transition-all duration-300 cursor-default">
                 <span className="text-azureradiance font-bold text-xl">S</span>
               </div>
-              <div className="w-12 h-12 rounded-xl bg-supernova/20 border border-supernova/40 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-supernova/20 border border-supernova/40 flex items-center justify-center hover:bg-supernova/30 hover:scale-110 transition-all duration-300 cursor-default">
                 <span className="text-supernova font-bold text-xl">C</span>
               </div>
             </div>
@@ -272,7 +272,7 @@ export default function SendEventPage() {
           </div>
 
           {/* Login Card */}
-          <div className="bg-zinc-900/60 backdrop-blur-xl rounded-2xl border border-zinc-800 p-8 shadow-2xl">
+          <div className="bg-zinc-900/60 backdrop-blur-xl rounded-2xl border border-zinc-800 p-8 shadow-2xl hover:border-zinc-700 transition-all duration-300">
             <div className="space-y-5">
               <div>
                 <label className="block text-sm font-medium text-zinc-300 mb-2">
@@ -284,12 +284,12 @@ export default function SendEventPage() {
                   onChange={(e) => setApiKey(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleAuth()}
                   placeholder="Enter your secret key..."
-                  className="bg-zinc-800/50 border-zinc-700 text-white placeholder:text-zinc-500 focus:border-supernova focus:ring-supernova/20 h-12"
+                  className="bg-zinc-800/50 border-zinc-700 text-white placeholder:text-zinc-500 focus:border-supernova focus:ring-supernova/20 h-12 transition-all hover:border-zinc-600"
                 />
               </div>
 
               {result?.error && (
-                <div className="p-3 bg-valencia/10 border border-valencia/30 rounded-lg">
+                <div className="p-3 bg-valencia/10 border border-valencia/30 rounded-lg animate-shake">
                   <p className="text-valencia text-sm flex items-center gap-2">
                     <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -302,7 +302,7 @@ export default function SendEventPage() {
               <Button
                 onClick={handleAuth}
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-valencia via-supernova to-oceangreen hover:opacity-90 text-black font-bold py-3 h-12 text-base"
+                className="w-full bg-gradient-to-r from-valencia via-supernova to-oceangreen hover:opacity-90 hover:scale-[1.02] hover:shadow-lg hover:shadow-supernova/20 text-black font-bold py-3 h-12 text-base transition-all duration-300"
               >
                 {loading ? (
                   <span className="flex items-center justify-center gap-2">
@@ -326,7 +326,7 @@ export default function SendEventPage() {
           </div>
 
           <div className="mt-6 text-center">
-            <Link href="/" className="text-zinc-500 hover:text-supernova text-sm transition-colors">
+            <Link href="/" className="text-zinc-500 hover:text-supernova hover:scale-105 text-sm transition-all inline-block">
               ← Back to Website
             </Link>
           </div>
@@ -348,33 +348,65 @@ export default function SendEventPage() {
       />
 
       {/* Header with ADSC gradient */}
-      <div className="border-b border-zinc-800 bg-zinc-900/80 backdrop-blur-xl">
+      <div className="border-b border-zinc-800 bg-zinc-900/80 backdrop-blur-xl sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
               {/* Mini ADSC Logo */}
-              <div className="flex items-center gap-0.5">
-                <span className="w-8 h-8 rounded-lg bg-valencia/20 border border-valencia/40 flex items-center justify-center text-valencia font-bold text-sm">A</span>
-                <span className="w-8 h-8 rounded-lg bg-oceangreen/20 border border-oceangreen/40 flex items-center justify-center text-oceangreen font-bold text-sm">D</span>
-                <span className="w-8 h-8 rounded-lg bg-azureradiance/20 border border-azureradiance/40 flex items-center justify-center text-azureradiance font-bold text-sm">S</span>
-                <span className="w-8 h-8 rounded-lg bg-supernova/20 border border-supernova/40 flex items-center justify-center text-supernova font-bold text-sm">C</span>
-              </div>
+              <Link href="/" className="flex items-center gap-0.5 group">
+                <span className="w-8 h-8 rounded-lg bg-valencia/20 border border-valencia/40 flex items-center justify-center text-valencia font-bold text-sm transition-all group-hover:bg-valencia/30 group-hover:scale-105">A</span>
+                <span className="w-8 h-8 rounded-lg bg-oceangreen/20 border border-oceangreen/40 flex items-center justify-center text-oceangreen font-bold text-sm transition-all group-hover:bg-oceangreen/30 group-hover:scale-105">D</span>
+                <span className="w-8 h-8 rounded-lg bg-azureradiance/20 border border-azureradiance/40 flex items-center justify-center text-azureradiance font-bold text-sm transition-all group-hover:bg-azureradiance/30 group-hover:scale-105">S</span>
+                <span className="w-8 h-8 rounded-lg bg-supernova/20 border border-supernova/40 flex items-center justify-center text-supernova font-bold text-sm transition-all group-hover:bg-supernova/30 group-hover:scale-105">C</span>
+              </Link>
               <div>
                 <h1 className="text-lg font-bold text-white">Newsletter Admin</h1>
                 <p className="text-xs text-zinc-500">Event Notification Center</p>
               </div>
             </div>
-            <Button
-              onClick={handleLogout}
-              variant="outline"
-              size="sm"
-              className="border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:border-valencia"
-            >
-              <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-              </svg>
-              Logout
-            </Button>
+            
+            {/* Center Logo */}
+            <Link href="/" className="hidden lg:flex items-center gap-1 absolute left-1/2 transform -translate-x-1/2 group">
+              <span className="text-valencia font-bold text-2xl transition-transform group-hover:scale-110">A</span>
+              <span className="text-oceangreen font-bold text-2xl transition-transform group-hover:scale-110">D</span>
+              <span className="text-azureradiance font-bold text-2xl transition-transform group-hover:scale-110">S</span>
+              <span className="text-supernova font-bold text-2xl transition-transform group-hover:scale-110">C</span>
+            </Link>
+            
+            {/* Navigation Links */}
+            <div className="flex items-center gap-4">
+              <nav className="hidden md:flex items-center gap-1">
+                <Link 
+                  href="/events" 
+                  className="px-3 py-2 text-sm font-medium text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-lg transition-all"
+                >
+                  EVENTS
+                </Link>
+                <Link 
+                  href="/hackathons" 
+                  className="px-3 py-2 text-sm font-medium text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-lg transition-all"
+                >
+                  HACKATHONS
+                </Link>
+                <Link 
+                  href="/" 
+                  className="px-3 py-2 text-sm font-medium text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-lg transition-all"
+                >
+                  EMS
+                </Link>
+              </nav>
+              <Button
+                onClick={handleLogout}
+                variant="outline"
+                size="sm"
+                className="border-zinc-700 text-zinc-300 hover:bg-valencia/20 hover:border-valencia hover:text-valencia transition-all"
+              >
+                <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                Logout
+              </Button>
+            </div>
           </div>
         </div>
       </div>
@@ -382,65 +414,65 @@ export default function SendEventPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         {/* Stats Row with ADSC colors */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <div className="bg-zinc-900/50 backdrop-blur rounded-xl border border-valencia/30 p-5 hover:border-valencia/50 transition-colors">
+          <div className="bg-zinc-900/50 backdrop-blur rounded-xl border border-valencia/30 p-5 hover:border-valencia hover:bg-valencia/5 hover:scale-[1.02] transition-all duration-300 cursor-default group">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-valencia/20 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-valencia/20 flex items-center justify-center group-hover:bg-valencia/30 transition-colors">
                 <svg className="w-6 h-6 text-valencia" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
               <div>
                 <p className="text-3xl font-bold text-white">{events.length}</p>
-                <p className="text-xs text-zinc-500">Events</p>
+                <p className="text-xs text-zinc-500 group-hover:text-zinc-400 transition-colors">Events</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-zinc-900/50 backdrop-blur rounded-xl border border-oceangreen/30 p-5 hover:border-oceangreen/50 transition-colors">
+          <div className="bg-zinc-900/50 backdrop-blur rounded-xl border border-oceangreen/30 p-5 hover:border-oceangreen hover:bg-oceangreen/5 hover:scale-[1.02] transition-all duration-300 cursor-default group">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-oceangreen/20 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-oceangreen/20 flex items-center justify-center group-hover:bg-oceangreen/30 transition-colors">
                 <svg className="w-6 h-6 text-oceangreen" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               </div>
               <div>
                 <p className="text-3xl font-bold text-white">{subscribers.length}</p>
-                <p className="text-xs text-zinc-500">Subscribers</p>
+                <p className="text-xs text-zinc-500 group-hover:text-zinc-400 transition-colors">Subscribers</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-zinc-900/50 backdrop-blur rounded-xl border border-azureradiance/30 p-5 hover:border-azureradiance/50 transition-colors">
+          <div className="bg-zinc-900/50 backdrop-blur rounded-xl border border-azureradiance/30 p-5 hover:border-azureradiance hover:bg-azureradiance/5 hover:scale-[1.02] transition-all duration-300 cursor-default group">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-azureradiance/20 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-azureradiance/20 flex items-center justify-center group-hover:bg-azureradiance/30 transition-colors">
                 <svg className="w-6 h-6 text-azureradiance" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
               <div>
                 <p className="text-3xl font-bold text-white">{sendLimit === -1 ? "All" : sendLimit}</p>
-                <p className="text-xs text-zinc-500">Send Limit</p>
+                <p className="text-xs text-zinc-500 group-hover:text-zinc-400 transition-colors">Send Limit</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-zinc-900/50 backdrop-blur rounded-xl border border-supernova/30 p-5 hover:border-supernova/50 transition-colors">
+          <div className="bg-zinc-900/50 backdrop-blur rounded-xl border border-supernova/30 p-5 hover:border-supernova hover:bg-supernova/5 hover:scale-[1.02] transition-all duration-300 cursor-default group">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-supernova/20 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-supernova/20 flex items-center justify-center group-hover:bg-supernova/30 transition-colors">
                 <svg className="w-6 h-6 text-supernova" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <div>
                 <p className="text-3xl font-bold text-oceangreen">Active</p>
-                <p className="text-xs text-zinc-500">Status</p>
+                <p className="text-xs text-zinc-500 group-hover:text-zinc-400 transition-colors">Status</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Send Limit Selector */}
-        <div className="mb-6 bg-zinc-900/50 backdrop-blur rounded-xl border border-zinc-800 p-5">
+        <div className="mb-6 bg-zinc-900/50 backdrop-blur rounded-xl border border-zinc-800 p-5 hover:border-zinc-700 transition-all">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <h3 className="text-white font-semibold flex items-center gap-2">
@@ -458,10 +490,10 @@ export default function SendEventPage() {
                 <button
                   key={limit.value}
                   onClick={() => setSendLimit(limit.value)}
-                  className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
+                  className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${
                     sendLimit === limit.value
-                      ? "bg-gradient-to-r from-azureradiance to-oceangreen text-black"
-                      : "bg-zinc-800 text-zinc-300 hover:bg-zinc-700 border border-zinc-700"
+                      ? "bg-gradient-to-r from-azureradiance to-oceangreen text-black shadow-lg shadow-azureradiance/25"
+                      : "bg-zinc-800 text-zinc-300 hover:bg-zinc-700 hover:text-white hover:scale-105 border border-zinc-700"
                   }`}
                 >
                   {limit.label}
@@ -584,23 +616,22 @@ export default function SendEventPage() {
             {events.map((event, index) => {
               const colors = ["valencia", "oceangreen", "azureradiance", "supernova"];
               const color = colors[index % 4];
-              const colorVar = color === "oceangreen" ? "ocean--green" : color === "azureradiance" ? "azure--radiance" : color;
               return (
                 <div
                   key={event.id}
-                  className="rounded-xl bg-zinc-900/50 p-5 transition-all group"
-                  style={{ border: `1px solid rgba(var(--${colorVar}-rgb, 128, 128, 128), 0.2)` }}
+                  className={`rounded-xl bg-zinc-900/50 p-5 transition-all duration-300 group cursor-default
+                    border border-${color}/20 hover:border-${color} hover:bg-${color}/5 hover:scale-[1.02] hover:shadow-lg hover:shadow-${color}/10`}
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex items-start gap-4 min-w-0 flex-1">
                       <div 
-                        className={`w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 font-bold text-xl bg-${color}/20 text-${color}`}
+                        className={`w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 font-bold text-xl bg-${color}/20 text-${color} group-hover:bg-${color}/30 group-hover:scale-110 transition-all duration-300`}
                       >
                         {event.id}
                       </div>
                       <div className="min-w-0">
-                        <h3 className="font-semibold text-white text-lg truncate">{event.name}</h3>
-                        <p className="text-zinc-500 text-sm mt-1 truncate">{event.category}</p>
+                        <h3 className="font-semibold text-white text-lg truncate group-hover:text-white transition-colors">{event.name}</h3>
+                        <p className="text-zinc-500 text-sm mt-1 truncate group-hover:text-zinc-400 transition-colors">{event.category}</p>
                         <p className="text-zinc-400 text-xs mt-2 flex items-center gap-1">
                           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -612,10 +643,10 @@ export default function SendEventPage() {
                     <Button
                       onClick={() => handleSendClick(event.id, event.name)}
                       disabled={loading || subscribers.length === 0}
-                      className={`flex-shrink-0 font-semibold ${
+                      className={`flex-shrink-0 font-semibold transition-all duration-200 ${
                         sendingId === event.id || subscribers.length === 0
                           ? "bg-zinc-700 text-zinc-400 cursor-not-allowed"
-                          : "bg-gradient-to-r from-valencia via-supernova to-oceangreen text-black hover:opacity-90"
+                          : "bg-gradient-to-r from-valencia via-supernova to-oceangreen text-black hover:opacity-90 hover:scale-105 hover:shadow-lg"
                       }`}
                     >
                       {sendingId === event.id ? (
@@ -644,13 +675,13 @@ export default function SendEventPage() {
 
         {/* Footer */}
         <div className="mt-8 text-center">
-          <div className="flex items-center justify-center gap-1 mb-2">
-            <span className="text-valencia">●</span>
-            <span className="text-oceangreen">●</span>
-            <span className="text-azureradiance">●</span>
-            <span className="text-supernova">●</span>
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <span className="w-2 h-2 rounded-full bg-valencia animate-pulse"></span>
+            <span className="w-2 h-2 rounded-full bg-oceangreen animate-pulse" style={{ animationDelay: '0.2s' }}></span>
+            <span className="w-2 h-2 rounded-full bg-azureradiance animate-pulse" style={{ animationDelay: '0.4s' }}></span>
+            <span className="w-2 h-2 rounded-full bg-supernova animate-pulse" style={{ animationDelay: '0.6s' }}></span>
           </div>
-          <p className="text-zinc-600 text-xs">
+          <p className="text-zinc-600 text-xs hover:text-zinc-400 transition-colors">
             ADSC Admin Dashboard • Atmiya Developer Students Club © 2026
           </p>
         </div>
