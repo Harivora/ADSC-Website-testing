@@ -66,13 +66,13 @@ ADSC Platform is the official website for Atmiya Developer Students Club. It pro
 Before you begin, ensure you have the following installed:
 
 - [Node.js](https://nodejs.org/) (v16.0 or higher)
-- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+- [Bun](https://bun.sh/)
 - [Git](https://git-scm.com/)
 
 ```bash
 # Verify installations
 node --version
-npm --version
+bun --version
 git --version
 ```
 
@@ -88,9 +88,7 @@ cd adsc-platform
 2. **Install dependencies**
 
 ```bash
-npm install
-# or
-yarn install
+bun install
 ```
 
 3. **Set up environment variables**
@@ -104,12 +102,12 @@ Edit `.env` with your configuration.
 4. **Run the development server**
 
 ```bash
-npm run dev
+bun run dev
 ```
 
 ## 📚 Usage
 
-Visit [https://adsc-atmiya.in](https://adsc.au) to explore events, hackathons, team, and resources. For local development, use `npm run dev` and access via `http://localhost:3000`.
+Visit [https://adsc-atmiya.in](https://adsc.au) to explore events, hackathons, team, and resources. For local development, use `bun run dev` and access via `http://localhost:3000`.
 
 ## 📘 API Reference
 
@@ -121,16 +119,15 @@ This project does not expose a public API. All data is managed within the Next.j
 
 ```
 adsc-platform/
-├── landing-site/           # Main Next.js app
-│   ├── app/                # Application routes and pages
-│   ├── components/         # React components
-│   ├── constants/          # Static data
-│   ├── lib/                # Utilities
-│   ├── public/             # Static assets
-│   ├── types/              # TypeScript types
-│   ├── package.json        # Project metadata and dependencies
-│   └── ...
-├── README.md               # This file
+├── app/                # Application routes and pages
+├── components/         # React components
+├── constants/          # Static data
+├── lib/                # Utilities
+├── public/             # Static assets
+├── types/              # TypeScript types
+├── utils/              # Utility functions
+├── package.json        # Project metadata and dependencies
+└── ...
 ```
 
 ### Running Tests
@@ -143,20 +140,20 @@ We use [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/) for co
 
 ```bash
 # Lint code
-npm run lint
+bun run lint
 
 # Fix linting issues
-npm run lint:fix
+bun run lint:fix
 
 # Format code
-npm run format
+bun run format
 ```
 
 ### Building
 
 ```bash
 # Production build
-npm run build
+bun run build
 ```
 
 ## 🚢 Deployment
@@ -167,7 +164,7 @@ This project is optimized for deployment on [Vercel](https://vercel.com/):
 
 ```bash
 # Deploy to Vercel
-npm run deploy:vercel
+bun run deploy:vercel
 ```
 
 ### Environment Variables
