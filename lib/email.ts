@@ -41,6 +41,16 @@ export async function sendEmail({ to, subject, html }: EmailOptions) {
 // ADSC Logo URL - hosted on the live website
 const ADSC_LOGO_URL = 'https://adsc-website-testing.vercel.app/images/brand/logo.png';
 
+// Basic HTML escaping to prevent HTML injection in email templates
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 // ADSC Logo HTML component for emails - using hosted image
 function getADSCLogoHtml(): string {
   return `
@@ -148,6 +158,14 @@ export function getEventEmailHtml(eventDetails: {
   date: string;
   registerUrl?: string;
 }): string {
+  const safeName = escapeHtml(eventDetails.name);
+  const safeDescription = escapeHtml(eventDetails.description);
+  const safeDate = escapeHtml(eventDetails.date);
+  const rawRegisterUrl = eventDetails.registerUrl ?? '';
+  const safeRegisterUrl = rawRegisterUrl
+    ? escapeHtml(rawRegisterUrl)
+    : '';
+
   return `
 <!DOCTYPE html>
 <html>
@@ -167,7 +185,7 @@ export function getEventEmailHtml(eventDetails: {
               <!-- ADSC Logo -->
               ${getADSCLogoHtml()}
               <p style="margin: 20px 0 10px; color: #fff; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">📅 New Event</p>
-              <h1 style="margin: 0; color: #fff; font-size: 26px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">${eventDetails.name}</h1>
+              <h1 style="margin: 0; color: #fff; font-size: 26px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">${safeName}</h1>
             </td>
           </tr>
           
