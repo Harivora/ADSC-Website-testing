@@ -198,9 +198,8 @@ export function getEventEmailHtml(eventDetails: {
   const safeName = escapeHtml(eventDetails.name);
   const safeDescription = escapeHtml(eventDetails.description);
   const safeDate = escapeHtml(eventDetails.date);
-  const rawRegisterUrl = eventDetails.registerUrl ?? '';
-  const safeRegisterUrl = rawRegisterUrl
-    ? escapeHtml(rawRegisterUrl)
+  const safeRegisterUrl = eventDetails.registerUrl
+    ? escapeHtml(eventDetails.registerUrl)
     : '';
 
   return `
@@ -230,21 +229,21 @@ export function getEventEmailHtml(eventDetails: {
           <tr>
             <td style="padding: 40px;">
               <p style="color: #a3a3a3; font-size: 16px; line-height: 1.6; margin: 0 0 20px;">
-                ${eventDetails.description}
+                ${safeDescription}
               </p>
               
               <!-- Event Date with colored border -->
               <div style="background-color: #262626; border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; border-left: 4px solid ${ADSC_COLORS.oceangreen};">
                 <p style="color: #737373; font-size: 12px; margin: 0 0 5px; text-transform: uppercase;">Event Date</p>
-                <p style="color: ${ADSC_COLORS.supernova}; font-size: 24px; font-weight: bold; margin: 0;">${eventDetails.date}</p>
+                <p style="color: ${ADSC_COLORS.supernova}; font-size: 24px; font-weight: bold; margin: 0;">${safeDate}</p>
               </div>
               
-              ${eventDetails.registerUrl ? `
+              ${safeRegisterUrl ? `
               <!-- CTA Button with gradient -->
               <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                   <td align="center" style="padding: 20px 0;">
-                    <a href="${eventDetails.registerUrl}" style="display: inline-block; background: linear-gradient(90deg, ${ADSC_COLORS.valencia}, ${ADSC_COLORS.supernova}, ${ADSC_COLORS.oceangreen}); color: #000; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">
+                    <a href="${safeRegisterUrl}" style="display: inline-block; background: linear-gradient(90deg, ${ADSC_COLORS.valencia}, ${ADSC_COLORS.supernova}, ${ADSC_COLORS.oceangreen}); color: #000; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">
                       Register Now
                     </a>
                   </td>
