@@ -81,33 +81,38 @@ export async function POST(request: NextRequest) {
       registerUrl: event.registerUrl || event.viewUrl,
     });
 
-    // Send emails to all subscribers
+    // Send emails in batches using BCC for privacy and efficiency
+    const batchSize = 50;
     let successCount = 0;
     let failCount = 0;
     const errors: string[] = [];
 
-    // Send to each subscriber individually (for better deliverability)
-    for (const subscriber of subscribers) {
+    for (let i = 0; i < subscribers.length; i += batchSize) {
+      const batch = subscribers.slice(i, i + batchSize);
+      const emails = batch.map((s) => s.email);
+
       try {
         const result = await sendEmail({
-          to: subscriber.email,
+          to: emails,
           subject: `📅 New Event: ${event.name}`,
           html: emailHtml,
         });
 
         if (result.success) {
-          successCount++;
+          successCount += emails.length;
         } else {
-          failCount++;
-          errors.push(`Email failed to send`);
+          failCount += emails.length;
+          errors.push(`Batch ${Math.floor(i / batchSize) + 1} failed to send`);
         }
       } catch {
-        failCount++;
-        errors.push(`Email sending error`);
+        failCount += emails.length;
+        errors.push(`Batch ${Math.floor(i / batchSize) + 1} sending error`);
       }
 
-      // Small delay to avoid rate limiting
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      // Small delay between batches to avoid rate limiting
+      if (i + batchSize < subscribers.length) {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      }
     }
 
     return NextResponse.json({

@@ -8,14 +8,22 @@ const ADSC_COLORS = {
   supernova: '#f7ce00',   // C - Yellow
 };
 
-// Create Gmail transporter
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD, // Use App Password, not regular password
-  },
-});
+// Validate Gmail env vars early
+function getTransporter() {
+  const user = process.env.GMAIL_USER;
+  const pass = process.env.GMAIL_APP_PASSWORD;
+
+  if (!user || !pass) {
+    throw new Error(
+      'Missing Gmail environment variables. Please set GMAIL_USER and GMAIL_APP_PASSWORD in .env.local'
+    );
+  }
+
+  return nodemailer.createTransport({
+    service: 'gmail',
+    auth: { user, pass },
+  });
+}
 
 export interface EmailOptions {
   to: string | string[];
@@ -25,21 +33,47 @@ export interface EmailOptions {
 
 export async function sendEmail({ to, subject, html }: EmailOptions) {
   try {
+    const transporter = getTransporter();
+    const fromAddress = process.env.GMAIL_USER;
+
+    // For a single recipient, send directly
+    if (!Array.isArray(to) || to.length === 1) {
+      const recipient = Array.isArray(to) ? to[0] : to;
+      const info = await transporter.sendMail({
+        from: `"ADSC Newsletter" <${fromAddress}>`,
+        to: recipient,
+        subject,
+        html,
+      });
+      return { success: true, data: info };
+    }
+
+    // For multiple recipients, use BCC for privacy (send from/to self, BCC all)
     const info = await transporter.sendMail({
-      from: `"ADSC Newsletter" <${process.env.GMAIL_USER}>`,
-      to: Array.isArray(to) ? to.join(', ') : to,
+      from: `"ADSC Newsletter" <${fromAddress}>`,
+      to: fromAddress,
+      bcc: to.join(', '),
       subject,
       html,
     });
 
     return { success: true, data: info };
   } catch (error) {
+    console.error('Email send error:', error);
     return { success: false, error };
   }
 }
 
+// Base URL for the website
+const SITE_URL = 'https://adsc-atmiya.in';
+
 // ADSC Logo URL - hosted on the live website
-const ADSC_LOGO_URL = 'https://adsc-website-testing.vercel.app/images/brand/logo.png';
+const ADSC_LOGO_URL = `${SITE_URL}/images/brand/logo.png`;
+
+// Generate unsubscribe URL for a given email
+function getUnsubscribeUrl(email: string): string {
+  return `${SITE_URL}/newsletter/unsubscribe?email=${encodeURIComponent(email)}`;
+}
 
 // Basic HTML escaping to prevent HTML injection in email templates
 function escapeHtml(value: string): string {
@@ -137,8 +171,11 @@ export function getWelcomeEmailHtml(email: string): string {
               <p style="color: #737373; font-size: 12px; margin: 0 0 10px;">
                 Atmiya Developer Students Club | Atmiya University
               </p>
-              <p style="color: #525252; font-size: 11px; margin: 0;">
+              <p style="color: #525252; font-size: 11px; margin: 0 0 10px;">
                 You received this email because ${email} subscribed to our newsletter.
+              </p>
+              <p style="margin: 0;">
+                <a href="${getUnsubscribeUrl(email)}" style="color: #737373; font-size: 11px; text-decoration: underline;">Unsubscribe</a>
               </p>
             </td>
           </tr>
@@ -240,8 +277,11 @@ export function getEventEmailHtml(eventDetails: {
               <p style="color: #737373; font-size: 12px; margin: 0 0 10px;">
                 Atmiya Developer Students Club | Atmiya University
               </p>
-              <p style="color: #525252; font-size: 11px; margin: 0;">
-                <a href="https://adsc-atmiya.in" style="color: ${ADSC_COLORS.azureradiance}; text-decoration: none;">Visit Website</a>
+              <p style="color: #525252; font-size: 11px; margin: 0 0 10px;">
+                <a href="${SITE_URL}" style="color: ${ADSC_COLORS.azureradiance}; text-decoration: none;">Visit Website</a>
+              </p>
+              <p style="margin: 0;">
+                <a href="${SITE_URL}/newsletter/unsubscribe" style="color: #737373; font-size: 11px; text-decoration: underline;">Unsubscribe</a>
               </p>
             </td>
           </tr>

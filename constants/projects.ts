@@ -131,5 +131,61 @@ export const events: Event[] = [
     btnBg: "rgba(126,34,206,0.5)",
     btnBgHover: "rgba(88,28,135)",
     cardBg: "rgba(126,34,206,0.05)",
+  },
+  {
+    id: "8",
+    image: "/images/events/orientation.jpg",
+    name: "Orientation Session 2.0 - ADSC",
+    category: "Orientation and Introductory session",
+    tags: [
+      "Welcome Session",
+      "ADSC Introduction",
+      "Event Overview",
+      "Getting Started"
+    ],
+    description:
+      "The Orientation Session for the Atmiya Developer Student Club (ADSC) is designed to welcome new members and provide an introduction to the club's mission, vision, and activities. This session will cover an overview of upcoming events, workshops, and projects, as well as opportunities for involvement and growth within the ADSC community. It's a great way for new members to get acquainted with the club and start their journey in the world of technology and development.",
+    date: "jan 19, 2026",
+    color: "rgba(34,197,94)", // Green
+    btnBg: "rgba(21,128,61,0.5)",
+    btnBgHover: "rgba(20,83,45)",
+    cardBg: "rgba(21,128,61,0.05)",
+  },
+  {
+    id: "9",
+    image: "/images/events/aisummit.jpeg",
+    name: "AI Summit",
+    category: "Artificial Intelligence",
+    tags: [
+      "AI summit",
+      "ADSC AI hackathon",
+      "Round Table Discussions",
+    ],
+    description:
+      "The AI Summit organized by the Atmiya Developer Student Club (ADSC) is a premier event focused on exploring the latest advancements and applications of artificial intelligence. The summit features a series of engaging activities, including an AI hackathon where participants can collaborate and innovate using AI technologies, as well as round table discussions with industry experts and thought leaders. Attendees will have the opportunity to learn about cutting-edge AI trends, network with professionals, and gain insights into the future of AI in various industries.",
+    date: "jan 27, 2026",
+    color: "rgba(244,63,94)", // Rose
+    btnBg: "rgba(29,78,216,0.5)",
+    btnBgHover: "rgba(30,58,138)",
+    cardBg: "rgba(29,78,216,0.05)",
+  },
+  {
+    id: "10",
+    image: "/images/events/aisummit.jpeg",
+    name: "Full stack development with basic coding knowledge - Workshop",
+    category: "Full Stack Development",
+    tags: [
+      "Full stack development",
+      "Core coding concepts",
+      "How to use AI tools in development",
+      "Decoding",
+    ],
+    description:
+      "A comprehensive workshop designed to guide participants with basic coding knowledge through the journey of becoming proficient full stack developers. The session will cover essential coding concepts, introduce popular AI tools that can enhance development workflows, and provide practical insights into building full stack applications. Attendees will learn how to leverage AI in their development process, understand the core principles of both frontend and backend development, and gain the confidence to create robust applications from start to finish.",
+    date: "Feb 16, 2026",
+    color: "rgba(59,130,246)", // Blue
+    btnBg: "rgba(29,78,216,0.5)",
+    btnBgHover: "rgba(30,58,138)",
+    cardBg: "rgba(29,78,216,0.05)",
   }
 ];

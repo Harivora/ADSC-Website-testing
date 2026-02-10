@@ -135,3 +135,125 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+// GET: Handle unsubscribe via link from emails
+export async function GET(request: NextRequest) {
+  const email = request.nextUrl.searchParams.get('email');
+
+  if (!email) {
+    return new NextResponse(getUnsubscribePageHtml('', 'missing'), {
+      status: 400,
+      headers: { 'Content-Type': 'text/html' },
+    });
+  }
+
+  const sanitizedEmail = sanitizeEmail(email);
+  if (!sanitizedEmail) {
+    return new NextResponse(getUnsubscribePageHtml(email, 'invalid'), {
+      status: 400,
+      headers: { 'Content-Type': 'text/html' },
+    });
+  }
+
+  // Delete subscriber
+  const { error } = await supabase
+    .from('newsletter_subscribers')
+    .delete()
+    .eq('email', sanitizedEmail);
+
+  if (error) {
+    return new NextResponse(getUnsubscribePageHtml(sanitizedEmail, 'error'), {
+      status: 500,
+      headers: { 'Content-Type': 'text/html' },
+    });
+  }
+
+  return new NextResponse(getUnsubscribePageHtml(sanitizedEmail, 'success'), {
+    status: 200,
+    headers: { 'Content-Type': 'text/html' },
+  });
+}
+
+// DELETE: Unsubscribe via API call
+export async function DELETE(request: NextRequest) {
+  try {
+    let body;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json(
+        { error: 'Invalid request format.' },
+        { status: 400 }
+      );
+    }
+
+    const sanitizedEmail = sanitizeEmail(body?.email);
+
+    if (!sanitizedEmail) {
+      return NextResponse.json(
+        { error: 'Please provide a valid email address.' },
+        { status: 400 }
+      );
+    }
+
+    const { error } = await supabase
+      .from('newsletter_subscribers')
+      .delete()
+      .eq('email', sanitizedEmail);
+
+    if (error) {
+      return NextResponse.json(
+        { error: 'Failed to unsubscribe. Please try again.' },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json(
+      { message: 'Successfully unsubscribed from the newsletter.' },
+      { status: 200 }
+    );
+  } catch {
+    return NextResponse.json(
+      { error: 'Something went wrong. Please try again.' },
+      { status: 500 }
+    );
+  }
+}
+
+// Simple unsubscribe confirmation page HTML
+function getUnsubscribePageHtml(email: string, status: 'success' | 'error' | 'missing' | 'invalid'): string {
+  const messages = {
+    success: {
+      title: '✅ Unsubscribed Successfully',
+      body: `<strong>${email}</strong> has been removed from the ADSC newsletter. You will no longer receive emails from us.`,
+      color: '#3cb179',
+    },
+    error: {
+      title: '❌ Something Went Wrong',
+      body: 'We couldn\'t process your request. Please try again later or contact us.',
+      color: '#dc3d43',
+    },
+    missing: {
+      title: '⚠️ Missing Email',
+      body: 'No email address was provided. Please use the unsubscribe link from your email.',
+      color: '#f7ce00',
+    },
+    invalid: {
+      title: '⚠️ Invalid Email',
+      body: 'The email address provided is not valid.',
+      color: '#f7ce00',
+    },
+  };
+
+  const msg = messages[status];
+
+  return `<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${msg.title}</title>
+<style>body{margin:0;padding:0;background:#0a0a0a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;color:#fff}
+.card{background:#171717;border-radius:16px;padding:48px;max-width:480px;text-align:center;border:1px solid #262626}
+.title{font-size:28px;margin:0 0 16px;color:${msg.color}}
+.body{color:#a3a3a3;font-size:16px;line-height:1.6;margin:0 0 24px}
+a.btn{display:inline-block;background:linear-gradient(90deg,#dc3d43,#f7ce00,#3cb179);color:#000;padding:12px 28px;text-decoration:none;border-radius:8px;font-weight:bold;font-size:14px}</style>
+</head><body><div class="card"><p class="title">${msg.title}</p><p class="body">${msg.body}</p><a class="btn" href="https://adsc-atmiya.in">Back to ADSC</a></div></body></html>`;
+}
