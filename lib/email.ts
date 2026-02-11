@@ -65,7 +65,7 @@ export async function sendEmail({ to, subject, html }: EmailOptions) {
 }
 
 // Base URL for the website
-const SITE_URL = 'https://adsc-atmiya.in';
+const SITE_URL = 'https://adsc-atmiya.vercel.app';
 
 // ADSC Logo URL - hosted on the live website
 const ADSC_LOGO_URL = `${SITE_URL}/images/brand/logo.png`;
