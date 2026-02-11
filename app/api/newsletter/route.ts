@@ -168,6 +168,20 @@ export async function GET(request: NextRequest) {
     });
   }
 
+  // Verify the subscriber was actually deleted (catches silent RLS failures)
+  const { data: stillExists } = await supabase
+    .from('newsletter_subscribers')
+    .select('email')
+    .eq('email', sanitizedEmail)
+    .single();
+
+  if (stillExists) {
+    return new NextResponse(getUnsubscribePageHtml(sanitizedEmail, 'error'), {
+      status: 500,
+      headers: { 'Content-Type': 'text/html' },
+    });
+  }
+
   return new NextResponse(getUnsubscribePageHtml(sanitizedEmail, 'success'), {
     status: 200,
     headers: { 'Content-Type': 'text/html' },
@@ -204,6 +218,20 @@ export async function DELETE(request: NextRequest) {
     if (error) {
       return NextResponse.json(
         { error: 'Failed to unsubscribe. Please try again.' },
+        { status: 500 }
+      );
+    }
+
+    // Verify the subscriber was actually deleted (catches silent RLS failures)
+    const { data: stillExists } = await supabase
+      .from('newsletter_subscribers')
+      .select('email')
+      .eq('email', sanitizedEmail)
+      .single();
+
+    if (stillExists) {
+      return NextResponse.json(
+        { error: 'Failed to unsubscribe. The operation was blocked. Please contact support.' },
         { status: 500 }
       );
     }

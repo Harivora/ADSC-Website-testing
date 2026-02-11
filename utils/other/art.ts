@@ -1,8 +1,11 @@
 import figlet from "figlet";
 
+// Configure figlet to use an absolute path so fonts load correctly from any route
+figlet.defaults({ fontPath: "/fonts" });
+
 export async function logFiglet(text: string) {
   const ascii = await figlet.text(text, {
-    font: "3-d", // Try "Slant", "Ghost", etc.
+    font: "3-d",
     horizontalLayout: "default",
     verticalLayout: "default",
   });
